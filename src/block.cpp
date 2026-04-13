@@ -6,4 +6,10 @@ Block::Block(unsigned int x, unsigned int y, unsigned int z) {
   this->position = Vector3(x, y, z);
 }
 
-Vector3::~Vector3() {};
+Block::~Block() {}
+
+std::ostream &operator<<(std::ostream &stream, const Block &block) {
+  stream << "Block: " << block.position;
+
+  return stream;
+}

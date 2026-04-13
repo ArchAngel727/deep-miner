@@ -20,5 +20,8 @@ public:
   std::optional<std::reference_wrapper<const Block>>
   get_block_at(const Vector3 &) const;
 
+  bool exists_at(const Vector3 &) const;
+
   void remove_block_at(unsigned int, unsigned int, unsigned int);
+  void print();
 };
