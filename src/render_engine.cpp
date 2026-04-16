@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <cstdlib>
-#include <iostream>
 #include <string>
 #include <vector>
 #ifdef _WIN32
@@ -42,7 +41,8 @@ void clear() {
 #endif
 }
 
-RenderEngine::RenderEngine(World *world) : world(world) {}
+RenderEngine::RenderEngine(World *world, PlayerBot *player)
+    : world(world), player(player) {}
 
 RenderEngine::~RenderEngine() {}
 
@@ -102,6 +102,11 @@ void RenderEngine::render_block_buffer(std::vector<std::string> &buffer,
 
         vec = Vector3(i, j, val);
         break;
+      }
+
+      if (this->player->get_position() == vec) {
+        buffer[j + 1][i + 1] = 'X';
+        continue;
       }
 
       auto block = world->get_block_at(vec);

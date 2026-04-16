@@ -10,9 +10,9 @@ class GameManager {
 private:
   bool running;
   World world;
-  RenderEngine render_engine;
   PlayerBot player;
   std::vector<Miner> enemies;
+  RenderEngine render_engine;
 
   void cmd_tree(std::string);
 

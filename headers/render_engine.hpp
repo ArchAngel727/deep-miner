@@ -1,5 +1,6 @@
 #pragma once
 
+#include "player_bot.hpp"
 #include "world.hpp"
 
 typedef enum {
@@ -13,6 +14,7 @@ typedef enum {
 
 class RenderEngine {
 private:
+  PlayerBot *player;
   World *world;
 
   void render_block(VIEW_AXIS, std::vector<std::string> &) const;
@@ -21,7 +23,7 @@ private:
                            size_t, bool) const;
 
 public:
-  RenderEngine(World *);
+  RenderEngine(World *, PlayerBot *);
   ~RenderEngine();
 
   const std::string render_to_buffer() const;

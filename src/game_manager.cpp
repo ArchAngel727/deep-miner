@@ -5,8 +5,8 @@
 #include <string>
 
 GameManager::GameManager()
-    : running(true), world(5, 5, 10), render_engine(&world),
-      player(&this->world, 0, 0) {}
+    : running(true), world(5, 5, 10), player(&this->world, 0, 0),
+      render_engine(&world, &player) {}
 
 GameManager::~GameManager() {}
 
