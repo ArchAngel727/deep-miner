@@ -15,7 +15,8 @@ public:
   int get_z() const;
 
   bool is_at(int, int, int) const;
-  bool is_at(const Vector3 &) const;
+
+  void export_to(size_t &, size_t &, size_t &) const;
 
   bool operator==(const Vector3 &) const;
 

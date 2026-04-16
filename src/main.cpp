@@ -1,9 +1,12 @@
-#include "../headers/world.hpp"
+#include "../headers/game_manager.hpp"
+#include <ctime>
 
 int main() {
-  World world;
+  std::srand(std::time(nullptr));
 
-  world.print();
+  GameManager gm;
+
+  // gm.loop();
 
   return 0;
 }
