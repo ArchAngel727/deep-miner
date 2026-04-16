@@ -5,12 +5,8 @@
 #include <string>
 
 GameManager::GameManager()
-    : running(true), world(5, 5, 10), render_engine(&world) {
-
-  auto buf = this->render_engine.render_to_buffer();
-
-  std::cout << buf;
-}
+    : running(true), world(5, 5, 10), render_engine(&world),
+      player(&this->world, 0, 0) {}
 
 GameManager::~GameManager() {}
 
@@ -37,28 +33,36 @@ void GameManager::cmd_tree(std::string cmd) {
                    [](unsigned char c) { return std::tolower(c); });
   });
 
+  if (cmds.size() < 1) {
+    return;
+  }
+
   if (cmds[0] == "q" || cmds[0] == "quit" || cmds[0] == "exit") {
     this->running = false;
   }
 
   if (cmds[0] == "mv") {
-    if (cmds.size() == 1) {
+    if (cmds.size() < 2) {
       return;
     }
 
     if (cmds[1] == "up") {
+      this->player.move(Vector3(0, -1, 0));
       return;
     }
 
     if (cmds[1] == "down") {
+      this->player.move(Vector3(0, 1, 0));
       return;
     }
 
     if (cmds[1] == "left") {
+      this->player.move(Vector3(-1, 0, 0));
       return;
     }
 
     if (cmds[1] == "right") {
+      this->player.move(Vector3(1, 0, 0));
       return;
     }
   }
@@ -68,8 +72,17 @@ void GameManager::loop() {
   std::string cmd;
 
   while (this->running) {
-    std::cin >> cmd;
+    std::cout << this->render_engine.render_to_buffer() << '\n';
+    std::cout << this->player.get_position() << '\n';
+    if (!std::getline(std::cin, cmd)) {
+      break;
+    }
+
+    if (cmd.empty()) {
+      continue;
+    }
 
     this->cmd_tree(cmd);
+    this->player.mine(this->player.get_position());
   }
 }

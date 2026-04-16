@@ -18,6 +18,10 @@ int Vector3::get_x() const { return this->x; }
 int Vector3::get_y() const { return this->y; }
 int Vector3::get_z() const { return this->z; }
 
+void Vector3::set_x(int x) { this->x = x; }
+void Vector3::set_y(int y) { this->y = y; }
+void Vector3::set_z(int z) { this->z = z; }
+
 void Vector3::export_to(size_t &x, size_t &y, size_t &z) const {
   x = this->x;
   y = this->y;
@@ -31,6 +35,14 @@ bool Vector3::operator==(const Vector3 &other) const {
 
   return false;
 }
+
+Vector3 &Vector3::operator+=(const Vector3 &vec) {
+  this->x += vec.get_x();
+  this->y += vec.get_y();
+  this->z += vec.get_z();
+
+  return *this;
+};
 
 bool Vector3::is_at(int x, int y, int z) const {
   if (this->x == x && this->y == y && this->z == z) {

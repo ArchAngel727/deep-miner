@@ -6,7 +6,7 @@ int main() {
 
   GameManager gm;
 
-  // gm.loop();
+  gm.loop();
 
   return 0;
 }

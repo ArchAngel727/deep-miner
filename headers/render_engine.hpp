@@ -2,7 +2,6 @@
 
 #include "world.hpp"
 
-typedef enum { w3h2, w2h3 } DISPLAY_RATIO;
 typedef enum {
   X_POSITIVE,
   Y_POSITIVE,
