@@ -1,4 +1,5 @@
 #include "../headers/miner.hpp"
+#include <iostream>
 
 Miner::Miner(World *world, size_t x, size_t y)
     : world(world), position(x, y, 0) {}
@@ -36,5 +37,15 @@ void Miner::move(const Vector3 &vec) {
 
   if (this->position.get_z() > size_z - 1) {
     this->position.set_z(size_z - 1);
+  }
+
+  auto column =
+      this->world->get_column(this->position.get_x(), this->position.get_y());
+
+  if (column.has_value()) {
+    this->position.set_z(10 - column->size());
+  } else {
+    std::cout << "!has val" << '\n';
+    this->position.set_z(9);
   }
 }

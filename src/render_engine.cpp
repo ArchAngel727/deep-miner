@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #ifdef _WIN32
-/*
 #include <windows.h>
 
 struct winsize {
@@ -19,7 +18,6 @@ get_window_size() {
   columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
   rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 }
-*/
 #else
 #include <sys/ioctl.h>
 #include <unistd.h>
@@ -112,7 +110,7 @@ void RenderEngine::render_block_buffer(std::vector<std::string> &buffer,
       auto block = world->get_block_at(vec);
 
       if (block.has_value()) {
-        buffer[j + 1][i + 1] = 'B';
+        buffer[j + 1][i + 1] = '*';
       } else {
         buffer[j + 1][i + 1] = ' ';
       }

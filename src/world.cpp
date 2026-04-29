@@ -74,6 +74,22 @@ void World::print() {
                 });
 }
 
-// bool World::exists_at(const Vector3 &vec) const {
-//
-// }
+std::optional<std::vector<std::reference_wrapper<const Block>>>
+World::get_column(size_t x, size_t y) const {
+  std::vector<std::reference_wrapper<const Block>> column;
+
+  for (int i = 0; i < this->get_size().get_z(); i++) {
+    for (auto &block : this->blocks) {
+      if (block.get_position().is_at(x, y, i)) {
+        std::cout << block.get_position() << '\n';
+        column.push_back(block);
+      }
+    }
+  }
+
+  if (column.size() != 0) {
+    return column;
+  }
+
+  return std::nullopt;
+}

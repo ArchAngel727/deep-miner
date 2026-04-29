@@ -46,22 +46,22 @@ void GameManager::cmd_tree(std::string cmd) {
       return;
     }
 
-    if (cmds[1] == "up") {
+    if (cmds[1] == "up" || cmds[1] == "w") {
       this->player.move(Vector3(0, -1, 0));
       return;
     }
 
-    if (cmds[1] == "down") {
+    if (cmds[1] == "down" || cmds[1] == "s") {
       this->player.move(Vector3(0, 1, 0));
       return;
     }
 
-    if (cmds[1] == "left") {
+    if (cmds[1] == "left" || cmds[1] == "a") {
       this->player.move(Vector3(-1, 0, 0));
       return;
     }
 
-    if (cmds[1] == "right") {
+    if (cmds[1] == "right" || cmds[1] == "d") {
       this->player.move(Vector3(1, 0, 0));
       return;
     }
@@ -82,7 +82,7 @@ void GameManager::loop() {
       continue;
     }
 
-    this->cmd_tree(cmd);
     this->player.mine(this->player.get_position());
+    this->cmd_tree(cmd);
   }
 }
