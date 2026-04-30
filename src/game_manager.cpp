@@ -11,7 +11,7 @@ GameManager::GameManager()
     : running(true), world(5, 5, 10), player(&this->world, 0, 0),
       render_engine(&world, &player, enemies) {
 
-  // this->enemies.push_back(new Bot1(&this->world, 4, 4));
+  this->enemies.push_back(new Bot1(&this->world, 4, 4));
   this->enemies.push_back(new Bot2(&this->world, 0, 4));
 }
 
@@ -88,6 +88,9 @@ void GameManager::loop() {
   while (this->running) {
     std::cout << this->render_engine.render_to_buffer() << '\n';
     std::cout << this->player.get_position() << '\n';
+    unsigned int point_sum = 0;
+    point_sum += this->player.get_points();
+
     if (!std::getline(std::cin, cmd)) {
       break;
     }
@@ -100,6 +103,7 @@ void GameManager::loop() {
 
     for (auto &bot : this->enemies) {
       int x, y;
+      point_sum += bot->get_points();
 
       if (rand() % 100 > 50) {
         x = 1;
@@ -117,6 +121,7 @@ void GameManager::loop() {
       bot->move(Vector3(x, y, 0));
     }
 
+    this->world.update_world(point_sum);
     this->cmd_tree(cmd);
   }
 }

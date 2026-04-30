@@ -8,6 +8,7 @@
 class World {
 private:
   Vector3 size;
+  unsigned int update_count;
   std::vector<Block> blocks;
 
 public:
@@ -26,8 +27,11 @@ public:
   std::optional<std::vector<std::reference_wrapper<const Block>>>
   get_column(size_t, size_t) const;
 
+  std::optional<std::vector<std::reference_wrapper<Block>>> get_column(size_t,
+                                                                       size_t);
+
   bool exists_at(const Vector3 &) const;
 
   void remove_block_at(size_t, size_t, size_t);
-  void print();
+  void update_world(unsigned int);
 };

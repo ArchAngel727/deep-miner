@@ -38,15 +38,17 @@ void Miner::move(const Vector3 &vec) {
     this->position.set_z(size_z - 1);
   }
 
-  auto column =
+  auto column_opt =
       this->world->get_column(this->position.get_x(), this->position.get_y());
 
-  std::sort(column->begin(), column->end(), [](const Block &a, const Block &b) {
-    return a.get_position().get_z() > b.get_position().get_z();
-  });
+  if (column_opt.has_value()) {
+    auto column = column_opt.value();
 
-  if (column.has_value()) {
-    this->position.set_z(10 - column->size());
+    std::sort(column.begin(), column.end(), [](const Block &a, const Block &b) {
+      return a.get_position().get_z() < b.get_position().get_z();
+    });
+
+    this->position.set_z(column.at(0).get().get_position().get_z());
   } else {
     this->position.set_z(9);
   }

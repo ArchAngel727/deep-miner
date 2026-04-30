@@ -1,6 +1,5 @@
 #include "../headers/bot_2.hpp"
 #include <algorithm>
-#include <iostream>
 
 Bot2::Bot2(World *world, size_t x, size_t y)
     : Miner(world, x, y), world(world) {}
@@ -20,7 +19,6 @@ void Bot2::mine(const Vector3 &vec) {
     if (column.size() > 2) {
       for (size_t i = 0; i < 3; i++) {
         Vector3 vec = column[i].get().get_position();
-        std::cout << vec << '\n';
         this->world->remove_block_at(vec.get_x(), vec.get_y(), vec.get_z() + i);
       }
     } else {

@@ -119,7 +119,6 @@ void RenderEngine::render_block_buffer(std::vector<std::string> &buffer,
 
       for (auto emeny : this->enemies) {
         if (emeny->get_position() == vec) {
-          std::cout << emeny->get_position() << '\n';
           buffer[j + 1][i + 1] = 'B';
         }
       }
