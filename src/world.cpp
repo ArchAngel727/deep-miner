@@ -81,7 +81,6 @@ World::get_column(size_t x, size_t y) const {
   for (int i = 0; i < this->get_size().get_z(); i++) {
     for (auto &block : this->blocks) {
       if (block.get_position().is_at(x, y, i)) {
-        std::cout << block.get_position() << '\n';
         column.push_back(block);
       }
     }

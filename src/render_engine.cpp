@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cstdlib>
+#include <iostream>
 #include <string>
 #include <vector>
 #ifdef _WIN32
@@ -39,8 +40,9 @@ void clear() {
 #endif
 }
 
-RenderEngine::RenderEngine(World *world, PlayerBot *player)
-    : world(world), player(player) {}
+RenderEngine::RenderEngine(World *world, PlayerBot *player,
+                           std::vector<Miner *> &enemies)
+    : world(world), player(player), enemies(enemies) {}
 
 RenderEngine::~RenderEngine() {}
 
@@ -114,6 +116,13 @@ void RenderEngine::render_block_buffer(std::vector<std::string> &buffer,
       } else {
         buffer[j + 1][i + 1] = ' ';
       }
+
+      for (auto emeny : this->enemies) {
+        if (emeny->get_position() == vec) {
+          std::cout << emeny->get_position() << '\n';
+          buffer[j + 1][i + 1] = 'B';
+        }
+      }
     }
 
     buffer[j + 1][width + 1] = '#';
@@ -164,7 +173,7 @@ void RenderEngine::render_block(VIEW_AXIS axis,
     str.resize(size_y + 2);
     block_buffer.assign(size_z + 2, str);
 
-    this->render_block_buffer(block_buffer, size_y, size_z, 0, true);
+    this->render_block_buffer(block_buffer, size_y, size_z, 0, 0, true);
     break;
   case Y_NEGATIVE:
     start = 2 * size_x + 2 * size_y + 12;
@@ -172,7 +181,7 @@ void RenderEngine::render_block(VIEW_AXIS axis,
     str.resize(size_y + 2);
     block_buffer.assign(size_z + 2, str);
 
-    this->render_block_buffer(block_buffer, size_x, size_z, 1, true);
+    this->render_block_buffer(block_buffer, size_x, size_z, 1, 0, true);
     break;
     break;
   case Z_NEGATIVE:

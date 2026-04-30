@@ -14,5 +14,8 @@ public:
 
   const Vector3 &get_position() const;
 
+  int get_value();
+  int get_value() const;
+
   friend std::ostream &operator<<(std::ostream &, const Block &);
 };

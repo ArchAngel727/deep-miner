@@ -1,20 +1,34 @@
 #include "../headers/game_manager.hpp"
+#include "../headers/bot_1.hpp"
+#include "../headers/bot_2.hpp"
 #include "../headers/world.hpp"
 #include <algorithm>
+#include <cstdlib>
 #include <iostream>
 #include <string>
 
 GameManager::GameManager()
     : running(true), world(5, 5, 10), player(&this->world, 0, 0),
-      render_engine(&world, &player) {}
+      render_engine(&world, &player, enemies) {
 
-GameManager::~GameManager() {}
+  // this->enemies.push_back(new Bot1(&this->world, 4, 4));
+  this->enemies.push_back(new Bot2(&this->world, 0, 4));
+}
+
+GameManager::~GameManager() {
+  for (auto enemie : enemies) {
+    delete enemie;
+  }
+
+  this->enemies.clear();
+}
 
 // Source - https://stackoverflow.com/a/14266139
 std::vector<std::string> split(std::string s, const std::string &delimiter) {
   std::vector<std::string> tokens;
   size_t pos = 0;
   std::string token;
+
   while ((pos = s.find(delimiter)) != std::string::npos) {
     token = s.substr(0, pos);
     tokens.push_back(token);
@@ -83,6 +97,26 @@ void GameManager::loop() {
     }
 
     this->player.mine(this->player.get_position());
+
+    for (auto &bot : this->enemies) {
+      int x, y;
+
+      if (rand() % 100 > 50) {
+        x = 1;
+      } else {
+        x = -1;
+      }
+
+      if (rand() % 100 > 50) {
+        y = 1;
+      } else {
+        y = -1;
+      }
+
+      bot->mine(bot->get_position());
+      bot->move(Vector3(x, y, 0));
+    }
+
     this->cmd_tree(cmd);
   }
 }

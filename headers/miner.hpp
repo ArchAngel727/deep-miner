@@ -6,14 +6,18 @@ class Miner {
 private:
   Vector3 position;
   World *world;
+  unsigned int points;
 
 public:
   Miner(World *, size_t, size_t);
-  virtual ~Miner();
+  virtual ~Miner() = default;
+
+  unsigned int &get_points();
+  void add_points(unsigned int);
 
   const Vector3 &get_position() const;
 
-  void move(const Vector3 &);
+  virtual void move(const Vector3 &);
 
-  virtual void mine(const Vector3 &);
+  virtual void mine(const Vector3 &) = 0;
 };

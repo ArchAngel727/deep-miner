@@ -1,14 +1,13 @@
 #include "../headers/miner.hpp"
-#include <iostream>
+#include <algorithm>
 
 Miner::Miner(World *world, size_t x, size_t y)
-    : world(world), position(x, y, 0) {}
+    : world(world), position(x, y, 0), points(0) {}
 
-Miner::~Miner() {}
+unsigned int &Miner::get_points() { return this->points; }
+void Miner::add_points(unsigned int val) { this->points += val; }
 
 const Vector3 &Miner::get_position() const { return this->position; }
-
-void Miner::mine(const Vector3 &) {}
 
 void Miner::move(const Vector3 &vec) {
   size_t size_x, size_y, size_z;
@@ -42,10 +41,13 @@ void Miner::move(const Vector3 &vec) {
   auto column =
       this->world->get_column(this->position.get_x(), this->position.get_y());
 
+  std::sort(column->begin(), column->end(), [](const Block &a, const Block &b) {
+    return a.get_position().get_z() > b.get_position().get_z();
+  });
+
   if (column.has_value()) {
     this->position.set_z(10 - column->size());
   } else {
-    std::cout << "!has val" << '\n';
     this->position.set_z(9);
   }
 }
